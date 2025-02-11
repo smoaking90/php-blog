@@ -5,7 +5,7 @@ namespace Core;
 use RuntimeException;
 
 class View{
-    public static function render(string $template, array $data = [], string $layout = null): string{
+    public static function render(string $template, array $data = [], ?string $layout = null): string{
         $content = static::renderTemplate(
             $template,
             $data
@@ -16,7 +16,8 @@ class View{
 
     protected static function renderTemplate(string $template, array $data): string{
         extract($data);
-        $path = dirname(__DIR__) . "/../app/Views/$template.php";
+        $path = dirname(__DIR__) . "/app/Views/$template.php";
+
 
         if(!file_exists($path)){
             throw new RuntimeException("Error: template file not found: $path");
@@ -33,7 +34,7 @@ class View{
         }
 
         extract([...$data, 'content' => $content]);
-        $path = dirname(__DIR__) . "/../app/Views/$template.php";
+        $path = dirname(__DIR__) . "/app/Views/$template.php";
 
         if(!file_exists($path)){
             throw new RuntimeException("Error: layout file not found: $path");
